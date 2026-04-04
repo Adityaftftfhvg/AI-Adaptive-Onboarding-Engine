@@ -68,9 +68,10 @@ Rules:
     parsed = JSON.parse(cleaned);
   }
 
-  const catalogNames = new Set(
-      loadEmbeddings().map((c) => c.course.toLowerCase().trim())
-    );
+ const allCourses = loadEmbeddings();
+const catalogNames = new Set(
+  allCourses.map((c) => (c.course || "").toLowerCase().trim())
+);
   
   const validatedPathway = parsed.pathway.filter((course: any) => {
     const exists = catalogNames.has(course.course.toLowerCase().trim());

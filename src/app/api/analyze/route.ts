@@ -114,10 +114,10 @@ export async function POST(req: NextRequest) {
     uncoveredSkills: recommendation.uncoveredSkills,
   });
 
-  } catch (err) {
-    console.error(err);
+ } catch (err: any) {
+    console.error("[analyze] unhandled error:", err);
     return NextResponse.json(
-      { error: "Something went wrong. Please try again." },
+      { error: err?.message || "Something went wrong. Please try again." },
       { status: 500 }
     );
   }
