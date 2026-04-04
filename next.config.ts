@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   env: {
     HF_API_KEY: process.env.HF_API_KEY,
   },
+  serverExternalPackages: ["@xenova/transformers", "pdf2json"],
+  experimental: {
+    serverComponentsExternalPackages: ["@xenova/transformers", "pdf2json"],
+  },
 };
 
 export default nextConfig;
