@@ -112,7 +112,6 @@ export default function UploadForm({ onAnalyze, loading, loadingStep, error }: P
 
       {/* CTA Button */}
       <div style={{ position: "relative", display: "inline-block" }} className="animate-fadeIn delay-400">
-        {/* Glow behind button */}
         <div style={{
           ...s.btnGlow,
           opacity: btnHover && !loading ? 1 : 0.4,
@@ -188,7 +187,6 @@ function InputCard({
         transition: "all 0.3s ease",
       }}
     >
-      {/* Card top accent line */}
       <div style={{
         position: "absolute", top: 0, left: "10%", right: "10%",
         height: 1,

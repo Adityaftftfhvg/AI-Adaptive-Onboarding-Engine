@@ -1,5 +1,6 @@
 import PDFParser from "pdf2json";
 
+
 // This is to Parse the pdf to text form.
 export async function extractTextFromPDF(buffer: Buffer): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -8,6 +9,7 @@ export async function extractTextFromPDF(buffer: Buffer): Promise<string> {
     pdfParser.on("pdfParser_dataError", (err: any) => {
       reject(new Error("PDF parsing failed: " + err.parserError));
     });
+
 
     pdfParser.on("pdfParser_dataReady", () => {
       const text = pdfParser.getRawTextContent();
