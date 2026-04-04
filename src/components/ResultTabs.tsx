@@ -13,14 +13,17 @@ interface Props {
   activeTab: Tab;
   onTabChange: (tab: Tab) => void;
 }
-
-const TABS: { id: Tab; label: string }[] = [
-  { id: "gap", label: "📊 Skill Gap" },
-  { id: "roadmap", label: "🗺️ Roadmap" },
-  { id: "trace", label: "🔍 Reasoning Trace" },
-];
+function getTabs(result: AnalysisResult) {
+  return [
+    { id: "gap" as Tab, label: `📊 Skill Gap (${result.skill_gap.missing_skills.length} missing)` },
+    { id: "roadmap" as Tab, label: `🗺️ Roadmap (${result.pathway.length} courses)` },
+    { id: "trace" as Tab, label: `🔍 Reasoning Trace` },
+  ];
+}
 
 export default function ResultTabs({ result, activeTab, onTabChange }: Props) {
+  const TABS = getTabs(result);
+
   return (
     <div>
        {/* Impact Metrics */}
@@ -45,6 +48,39 @@ export default function ResultTabs({ result, activeTab, onTabChange }: Props) {
             <Section title="Skill Gap Analysis">
               <SkillGapChart skillGap={result.skill_gap} />
             </Section>
+           {result.uncoveredSkills?.length > 0 && (
+            <div style={{
+              background: "rgba(255,165,0,0.05)",
+              border: "1px solid rgba(255,165,0,0.2)",
+              borderRadius: radius.lg,
+              padding: "16px 20px",
+              marginBottom: 24,
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 12,
+            }}>
+              <span style={{ fontSize: 20, flexShrink: 0 }}>🔍</span>
+              <div>
+                <p style={{
+                  fontFamily: fonts.display,
+                  fontWeight: 700,
+                  fontSize: 14,
+                  color: "#FFB347",
+                  marginBottom: 6,
+                }}>
+                  Catalog Gap Detected
+                </p>
+                <p style={{ fontSize: 13, color: colors.textSub, lineHeight: 1.6, margin: 0 }}>
+                  We couldn't find direct course matches for{" "}
+                  <span style={{ color: "#FFB347", fontWeight: 600 }}>
+                    {result.uncoveredSkills.join(", ")}
+                  </span>
+                  {" "}in the current catalog. Consider adding specialized courses for these skills or expanding your catalog.
+                </p>
+              </div>
+            </div>
+          )}
+
             <Section title="Learning Pathway">
               <PathwayTimeline pathway={result.pathway} />
             </Section>

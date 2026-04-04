@@ -1,9 +1,8 @@
-
 "use client";
 
-import dynamic from "next/dynamic";
 import { AnalysisResult } from "@/types";
 import { colors, fonts, radius } from "@/styles/tokens";
+import { useState } from "react";
 
 interface Props {
   result: AnalysisResult;
@@ -39,18 +38,21 @@ export default function DownloadReport({ result }: Props) {
       const pdf = new jsPDF("p", "mm", "a4");
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
-      const imgHeight = (canvas.height * pageWidth) / canvas.width;
+
+      const margin = 0; // set to 10 if you want side margins
+      const usableWidth = pageWidth - margin * 2;
+      const imgHeight = (canvas.height * usableWidth) / canvas.width;
 
       let heightLeft = imgHeight;
       let position = 0;
 
-      pdf.addImage(imgData, "JPEG", 0, position, pageWidth, imgHeight);
+      pdf.addImage(imgData, "JPEG", margin, position, usableWidth, imgHeight);
       heightLeft -= pageHeight;
 
       while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
+        position -= pageHeight;
         pdf.addPage();
-        pdf.addImage(imgData, "JPEG", 0, position, pageWidth, imgHeight);
+        pdf.addImage(imgData, "JPEG", margin, position, usableWidth, imgHeight);
         heightLeft -= pageHeight;
       }
 
@@ -66,6 +68,7 @@ export default function DownloadReport({ result }: Props) {
     </button>
   );
 }
+
 
 
 function buildReportHTML(result: AnalysisResult): string {
