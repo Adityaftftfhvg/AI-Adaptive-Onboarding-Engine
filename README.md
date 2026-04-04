@@ -9,11 +9,6 @@
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
 ---
-🚀 Live Demo
-
-👉 Try PathForge here:
-🔗 https://ai-adaptive-onboarding-engine-smoky.vercel.app/
-
 ## 📋 Table of Contents
 
 - [Problem Statement](#-problem-statement)
