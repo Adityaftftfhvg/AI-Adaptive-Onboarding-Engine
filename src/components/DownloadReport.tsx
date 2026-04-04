@@ -2,6 +2,7 @@
 
 import { AnalysisResult } from "@/types";
 import { colors, fonts, radius } from "@/styles/tokens";
+import { useState } from "react";
 
 interface Props {
   result: AnalysisResult;
@@ -67,6 +68,7 @@ export default function DownloadReport({ result }: Props) {
     </button>
   );
 }
+
 
 
 function buildReportHTML(result: AnalysisResult): string {

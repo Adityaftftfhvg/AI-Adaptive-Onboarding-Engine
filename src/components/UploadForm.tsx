@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { InputMode } from "@/types";
 import { colors, fonts, radius, spacing, gradients } from "@/styles/tokens";
-
+import { LoadingStep } from "@/hooks/useAnalyze";
 interface Props {
   onAnalyze: (params: {
     resumeMode: InputMode;
@@ -14,11 +14,11 @@ interface Props {
     jdFile: File | null;
   }) => void;
   loading: boolean;
+  loadingStep: LoadingStep; 
   error: string;
 }
 
-export default function UploadForm({ onAnalyze, loading, error }: Props) {
-  const [resumeMode, setResumeMode] = useState<InputMode>("text");
+
   const [jdMode, setJdMode]         = useState<InputMode>("text");
   const [resumeText, setResumeText] = useState("");
   const [jdText, setJdText]         = useState("");
@@ -29,6 +29,12 @@ export default function UploadForm({ onAnalyze, loading, error }: Props) {
   function handleSubmit() {
     onAnalyze({ resumeMode, jdMode, resumeText, jdText, resumeFile, jdFile });
   }
+  const STEPS: Partial<Record<LoadingStep, string>> = {
+    parsing:    "✓ Parsing documents...",
+    extracting: "✓ Extracting skills...",
+    searching:  "⟳ Searching catalog...",
+    generating: "⟳ Generating pathway...",
+  };
 
   return (
     <main style={s.main}>
@@ -123,7 +129,7 @@ export default function UploadForm({ onAnalyze, loading, error }: Props) {
           {loading ? (
             <span style={s.loadingRow}>
               <span style={s.spinner} />
-              <span>Analyzing your profile...</span>
+
             </span>
           ) : (
             <span style={s.btnInner}>
