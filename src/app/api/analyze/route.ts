@@ -6,6 +6,13 @@ import { calculateImpact } from "@/lib/calculateImpact";
 
 export async function POST(req: NextRequest) {
   try {
+    if (!process.env.GROQ_API_KEY) {
+      return NextResponse.json(
+        { error: "GROQ_API_KEY is not set. Add it to your .env.local file." },
+        { status: 500 }
+      );
+    }
+
     const formData = await req.formData();
 
     // --- Parse Resume ---
