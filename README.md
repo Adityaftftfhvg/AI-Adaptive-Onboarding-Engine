@@ -36,6 +36,14 @@ Corporate onboarding often relies on static, one-size-fits-all curricula:
 **PathForge** solves this by intelligently parsing a candidate's existing skillset and dynamically generating an optimized, personalized learning pathway — skipping what they know and focusing only on what they need.
 
 ---
+## ⚡ Key Highlights
+
+- 🧠 AI-powered skill gap analysis using LLMs
+- 🎯 Personalized learning pathways (not generic courses)
+- ⚡ Real-time inference using Groq (ultra low latency)
+- 🔍 Semantic search (vector embeddings, not keywords)
+- ✅ 100% grounded recommendations (no hallucinations)
+- 📊 Measurable impact (hours saved + efficiency gain)
 
 ## 💡 Solution Overview
 
