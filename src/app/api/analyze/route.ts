@@ -62,14 +62,14 @@ export async function POST(req: NextRequest) {
 
     // --- Step 2: Recommend Courses ---
     let recommendation;
-    try {
+   try {
       recommendation = await recommendCourses(
         skillGap.missing_skills,
         skillGap.priority
       );
-    } catch (err) {
+    } catch (err: any) {
       return NextResponse.json(
-        { error: "Course recommendation failed. Try again." },
+        { error: "Course recommendation failed: " + (err?.message || "Unknown error") },
         { status: 500 }
       );
     }

@@ -35,7 +35,14 @@ let embedder: any = null;
 
 async function getEmbedding(text: string): Promise<number[]> {
   if (!embedder) {
-    embedder = await pipeline("feature-extraction", "Xenova/nomic-embed-text-v1");
+    try {
+      embedder = await pipeline("feature-extraction", "Xenova/nomic-embed-text-v1");
+    } catch (e) {
+      throw new Error(
+        "Failed to load embedding model. Make sure @xenova/transformers is installed and the model can be downloaded: " +
+          (e as Error).message
+      );
+    }
   }
   const output = await embedder(`search_document: ${text}`, {
     pooling: "mean",
