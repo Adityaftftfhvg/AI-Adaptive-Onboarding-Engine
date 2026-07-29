@@ -92,6 +92,7 @@ export interface ResumeData {
 }
 
 export type ResumeBuilderMode = "create" | "improve";
+export type ResumeTemplate = "classic" | "modern" | "minimal";
 
 export interface ResumeBuilderInput {
   mode: ResumeBuilderMode;

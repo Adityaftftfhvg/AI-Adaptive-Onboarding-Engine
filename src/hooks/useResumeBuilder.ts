@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ResumeData, ResumeBuilderMode } from "@/types";
+import { ResumeData, ResumeBuilderMode, ResumeTemplate } from "@/types";
 
 export type ResumeLoadingStep = "idle" | "generating" | "done";
 
@@ -9,17 +9,20 @@ export function useResumeBuilder() {
   const [loadingStep, setLoadingStep] = useState<ResumeLoadingStep>("idle");
   const [error, setError] = useState("");
   const [resume, setResume] = useState<ResumeData | null>(null);
+  const [template, setTemplate] = useState<ResumeTemplate>("classic");
 
   const loading = loadingStep === "generating";
 
   async function build({
-    mode, targetRole, text, file,
+    mode, targetRole, text, file, template: chosenTemplate,
   }: {
     mode: ResumeBuilderMode;
     targetRole: string;
     text: string;
     file: File | null;
+    template: ResumeTemplate;
   }) {
+    setTemplate(chosenTemplate);
     setError("");
     setResume(null);
     setLoadingStep("generating");
@@ -71,5 +74,5 @@ export function useResumeBuilder() {
     setLoadingStep("idle");
   }
 
-  return { loading, loadingStep, error, resume, build, reset };
+  return { loading, loadingStep, error, resume, template, build, reset };
 }
