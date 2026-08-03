@@ -5,6 +5,13 @@ const nextConfig: NextConfig = {
   env: {
     HF_API_KEY: process.env.HF_API_KEY,
   },
+<<<<<<< HEAD
   turbopack: {},
   serverExternalPackages: ["unpdf"],
 };
+=======
+  serverExternalPackages: ["pdf2json"],
+};
+
+export default nextConfig;
+>>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88

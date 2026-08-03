@@ -1,33 +1,37 @@
 export const colors = {
-  bg: "#0A0F1E",
-  bgDeep: "#0D1B2A",
-  surface: "rgba(26,35,50,0.8)",
-  surfaceHover: "rgba(26,35,50,0.95)",
-  border: "rgba(0,212,170,0.15)",
-  borderSubtle: "rgba(0,212,170,0.08)",
-  borderDanger: "rgba(255,107,107,0.3)",
-  accent: "#00D4AA",
-  accentBlue: "#0099FF",
-  accentBg: "rgba(0,212,170,0.05)",
-  accentBgStrong: "rgba(0,212,170,0.1)",
-  danger: "#FF6B6B",
+  bg: "#F7F2EA",
+  bgDeep: "#EFE6D8",
+  surface: "#FFFFFF",
+  surfaceHover: "#FFF4F0",
+  border: "rgba(20,20,30,0.10)",
+  borderSubtle: "rgba(20,20,30,0.06)",
+  borderDanger: "rgba(220,38,38,0.3)",
+  accent: "#FF5A36",
+  accentBlue: "#2563EB",
+  accentBg: "rgba(255,90,54,0.08)",
+  accentBgStrong: "rgba(255,90,54,0.14)",
+  danger: "#DC2626",
   warning: "#F59E0B",
-  blue: "#60A5FA",
-  blueBg: "rgba(0,153,255,0.08)",
-  blueBorder: "rgba(0,153,255,0.2)",
-  textPrimary: "#E2E8F0",
-  textMuted: "#64748B",
-  textSub: "#94A3B8",
-  textAccent: "#00D4AA",
-  textDark: "#0A0F1E",
+  blue: "#2563EB",
+  blueBg: "rgba(37,99,235,0.08)",
+  blueBorder: "rgba(37,99,235,0.2)",
+  textPrimary: "#181524",
+  textMuted: "#6B7280",
+  textSub: "#40404D",
+  textAccent: "#FF5A36",
+  textDark: "#FFFFFF",
 };
 
 export const fonts = {
+<<<<<<< HEAD
   display: "'Syne', sans-serif",
   body: "'DM Sans', sans-serif",
    mono: "'JetBrains Mono', 'Courier New', monospace",
+=======
+  display: "'Inter', sans-serif",
+  body: "'Inter', sans-serif",
+>>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
 };
-
 export const radius = {
   xs: 4,
   sm: 6,
@@ -48,7 +52,7 @@ export const spacing = {
 };
 
 export const gradients = {
-  accent: "linear-gradient(135deg, #00D4AA, #0099FF)",
-  grid: `linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px)`,
+  accent: "linear-gradient(135deg, #FF7A50, #FF5A36)",
+  grid: `linear-gradient(rgba(20,20,30,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,20,30,0.03) 1px, transparent 1px)`,
 };

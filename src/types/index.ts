@@ -50,3 +50,52 @@ export interface AnalysisResult {
 
 export type Tab = "gap" | "roadmap" | "trace";
 export type InputMode = "text" | "pdf";
+
+// ── Resume Builder types ────────────────────────────────────────────────
+
+export interface ResumeExperience {
+  role: string;
+  company: string;
+  duration: string;
+  bullets: string[];
+}
+
+export interface ResumeProject {
+  name: string;
+  description: string;
+  bullets: string[];
+  tech: string[];
+}
+
+export interface ResumeEducation {
+  degree: string;
+  institution: string;
+  year: string;
+  details?: string;
+}
+
+export interface ResumeData {
+  fullName: string;
+  email: string;
+  phone: string;
+  location: string;
+  linkedin?: string;
+  github?: string;
+  summary: string;
+  education: ResumeEducation[];
+  experience: ResumeExperience[];
+  projects: ResumeProject[];
+  skills: string[];
+  certifications?: string[];
+  ats_score: number;
+  ats_notes: string[];
+}
+
+export type ResumeBuilderMode = "create" | "improve";
+export type ResumeTemplate = "classic" | "modern" | "minimal";
+
+export interface ResumeBuilderInput {
+  mode: ResumeBuilderMode;
+  targetRole?: string;      
+  rawText: string;          
+}

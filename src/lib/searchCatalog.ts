@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 import { pipeline } from "@xenova/transformers";
 
 interface CourseWithEmbedding {
+=======
+import fs from "fs";
+import path from "path";
+import Papa from "papaparse";
+
+interface Course {
+>>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
   course: string;
   skills: string;
   level: string;
@@ -9,28 +17,32 @@ interface CourseWithEmbedding {
   certificate_type: string;
   prerequisites: string;
   skill_level_required: string;
-  embedding: number[];
 }
 
-let cachedEmbeddings: CourseWithEmbedding[] | null = null;
+let cachedCourses: Course[] | null = null;
 
+<<<<<<< HEAD
 export function loadEmbeddings(): CourseWithEmbedding[] {
   if (cachedEmbeddings) return cachedEmbeddings;
   const fs = require("fs");
   const path = require("path");
   const filePath = path.join(process.cwd(), "src", "data", "catalog_embeddings.json");
+=======
+export function loadEmbeddings(): Course[] {
+  if (cachedCourses) return cachedCourses;
+  const filePath = path.join(process.cwd(), "src", "data", "coursera_enriched.csv");
+>>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
   const raw = fs.readFileSync(filePath, "utf-8");
-  cachedEmbeddings = JSON.parse(raw);
-  return cachedEmbeddings!;
+  const result = Papa.parse<Course>(raw, { header: true, skipEmptyLines: true });
+  cachedCourses = result.data;
+  return cachedCourses;
 }
 
-function cosineSimilarity(a: number[], b: number[]): number {
-  const dot = a.reduce((sum, val, i) => sum + val * b[i], 0);
-  const magA = Math.sqrt(a.reduce((sum, val) => sum + val * val, 0));
-  const magB = Math.sqrt(b.reduce((sum, val) => sum + val * val, 0));
-  return dot / (magA * magB);
-}
+export async function searchCatalog(missingSkills: string[], topN = 15): Promise<Course[]> {
+  const courses = loadEmbeddings();
+  const skillsLower = missingSkills.map((s) => s.toLowerCase());
 
+<<<<<<< HEAD
 let embedder: any = null;
 
 async function getEmbedding(text: string): Promise<number[]> {
@@ -53,9 +65,20 @@ export async function searchCatalog(missingSkills: string[], topN = 15) {
     ...course,
     score: cosineSimilarity(queryEmbedding, course.embedding),
   }));
+=======
+  const scored = courses.map((course) => {
+    const haystack = `${course.course} ${course.skills}`.toLowerCase();
+    const score = skillsLower.reduce(
+      (sum, skill) => sum + (haystack.includes(skill) ? 1 : 0),
+      0
+    );
+    return { ...course, score };
+  });
+>>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
 
   return scored
+    .filter((c) => c.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, topN)
-    .map(({ embedding, score, ...course }) => course);
+    .map(({ score, ...course }) => course);
 }

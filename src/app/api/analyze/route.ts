@@ -6,6 +6,13 @@ import { calculateImpact } from "@/lib/calculateImpact";
 
 export async function POST(req: NextRequest) {
   try {
+    if (!process.env.GROQ_API_KEY) {
+      return NextResponse.json(
+        { error: "GROQ_API_KEY is not set. Add it to your .env.local file." },
+        { status: 500 }
+      );
+    }
+
     const formData = await req.formData();
 
     // --- Parse Resume ---
@@ -55,14 +62,14 @@ export async function POST(req: NextRequest) {
 
     // --- Step 2: Recommend Courses ---
     let recommendation;
-    try {
+   try {
       recommendation = await recommendCourses(
         skillGap.missing_skills,
         skillGap.priority
       );
-    } catch (err) {
+    } catch (err: any) {
       return NextResponse.json(
-        { error: "Course recommendation failed. Try again." },
+        { error: "Course recommendation failed: " + (err?.message || "Unknown error") },
         { status: 500 }
       );
     }
@@ -107,10 +114,10 @@ export async function POST(req: NextRequest) {
     uncoveredSkills: recommendation.uncoveredSkills,
   });
 
-  } catch (err) {
-    console.error(err);
+ } catch (err: any) {
+    console.error("[analyze] unhandled error:", err);
     return NextResponse.json(
-      { error: "Something went wrong. Please try again." },
+      { error: err?.message || "Something went wrong. Please try again." },
       { status: 500 }
     );
   }
