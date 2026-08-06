@@ -26,7 +26,10 @@
     "pdf-parse": "^2.4.5",
     "pdf2json": "^4.0.2",
     "pdfjs-dist": "^5.5.207",
+<<<<<<< HEAD
+=======
     "prisma": "^6.19.3",
+>>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "recharts": "^3.8.0",

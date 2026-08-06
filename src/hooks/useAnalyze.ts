@@ -57,6 +57,14 @@ export function useAnalyze() {
 
       setLoadingStep("searching");
       await new Promise((r) => setTimeout(r, 600)); // brief pause for UX
+<<<<<<< HEAD
+
+      setLoadingStep("generating");
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || "Analysis failed");
+
+=======
 
       setLoadingStep("generating");
 
@@ -71,6 +79,7 @@ if (contentType.includes("application/json")) {
 
 if (!res.ok) throw new Error(data.error || "Analysis failed");
 
+>>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
       setLoadingStep("done");
       setResult(data);
     } catch (err: any) {

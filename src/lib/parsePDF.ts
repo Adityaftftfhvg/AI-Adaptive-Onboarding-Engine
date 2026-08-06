@@ -1,5 +1,8 @@
 import PDFParser from "pdf2json";
+<<<<<<< HEAD
+=======
 
+>>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
 
 
 export async function extractTextFromPDF(buffer: Buffer): Promise<string> {
@@ -10,7 +13,10 @@ export async function extractTextFromPDF(buffer: Buffer): Promise<string> {
       reject(new Error("PDF parsing failed: " + err.parserError));
     });
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
     pdfParser.on("pdfParser_dataReady", () => {
       const text = pdfParser.getRawTextContent();
       resolve(text);
