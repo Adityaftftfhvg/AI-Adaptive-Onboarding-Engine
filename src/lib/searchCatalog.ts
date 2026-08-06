@@ -1,14 +1,14 @@
-<<<<<<< HEAD
+
 import { pipeline } from "@xenova/transformers";
 
 interface CourseWithEmbedding {
-=======
+
 import fs from "fs";
 import path from "path";
 import Papa from "papaparse";
 
 interface Course {
->>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
+
   course: string;
   skills: string;
   level: string;
@@ -21,17 +21,17 @@ interface Course {
 
 let cachedCourses: Course[] | null = null;
 
-<<<<<<< HEAD
+
 export function loadEmbeddings(): CourseWithEmbedding[] {
   if (cachedEmbeddings) return cachedEmbeddings;
   const fs = require("fs");
   const path = require("path");
   const filePath = path.join(process.cwd(), "src", "data", "catalog_embeddings.json");
-=======
+
 export function loadEmbeddings(): Course[] {
   if (cachedCourses) return cachedCourses;
   const filePath = path.join(process.cwd(), "src", "data", "coursera_enriched.csv");
->>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
+
   const raw = fs.readFileSync(filePath, "utf-8");
   const result = Papa.parse<Course>(raw, { header: true, skipEmptyLines: true });
   cachedCourses = result.data;
@@ -42,7 +42,7 @@ export async function searchCatalog(missingSkills: string[], topN = 15): Promise
   const courses = loadEmbeddings();
   const skillsLower = missingSkills.map((s) => s.toLowerCase());
 
-<<<<<<< HEAD
+
 let embedder: any = null;
 
 async function getEmbedding(text: string): Promise<number[]> {
@@ -65,7 +65,7 @@ export async function searchCatalog(missingSkills: string[], topN = 15) {
     ...course,
     score: cosineSimilarity(queryEmbedding, course.embedding),
   }));
-=======
+
   const scored = courses.map((course) => {
     const haystack = `${course.course} ${course.skills}`.toLowerCase();
     const score = skillsLower.reduce(
@@ -74,7 +74,7 @@ export async function searchCatalog(missingSkills: string[], topN = 15) {
     );
     return { ...course, score };
   });
->>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
+
 
   return scored
     .filter((c) => c.score > 0)

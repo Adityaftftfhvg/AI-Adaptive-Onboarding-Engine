@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 # ⬡ PathForge — AI-Adaptive Onboarding Engine
 
@@ -970,4 +970,4 @@ npx tsx src/scripts/generateEmbeddings.ts
 - [Coursera Dataset — Kaggle](https://www.kaggle.com/) — course catalog data
 - [ARTPARK CodeForge Hackathon](https://artpark.in) — challenge organizers
 
->>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
+

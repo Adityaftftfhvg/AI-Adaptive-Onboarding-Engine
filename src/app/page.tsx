@@ -1,8 +1,8 @@
 "use client";
-<<<<<<< HEAD
-=======
 
->>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
+
+
+
 import dynamic from "next/dynamic";
 import { Tab, AnalysisResult } from "@/types";
 import { useState, useEffect } from "react";
@@ -10,13 +10,13 @@ import { useAnalyze } from "@/hooks/useAnalyze";
 import UploadForm from "@/components/UploadForm";
 import ResultTabs from "@/components/ResultTabs";
 import { colors, fonts, radius, spacing, gradients } from "@/styles/tokens";
-<<<<<<< HEAD
+
 const DownloadReport = dynamic(() => import("@/components/DownloadReport"), {
   ssr: false,
 });
 function CopyButton({ result }: { result: AnalysisResult }) {
   const [copied, setCopied] = useState(false);
-=======
+
 
 const DownloadReport = dynamic(() => import("@/components/DownloadReport"), {
   ssr: false,
@@ -74,7 +74,7 @@ function Logo() {
     </div>
   );
 }
->>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
+
 
   function handleCopy() {
     const summary = `
@@ -161,11 +161,11 @@ export default function Home() {
         <UploadForm
           onAnalyze={analyze}
           loading={loading}
-<<<<<<< HEAD
+
           loadingStep={loadingStep}  
-=======
+
           loadingStep={loadingStep}
->>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
+
           error={error}
         />
       ) : (
@@ -182,10 +182,10 @@ export default function Home() {
               delay={3}
             />
           </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
+
+
+
           {result.skill_gap.missing_skills.length === 0 ? (
             <div style={{
               textAlign: "center",
@@ -211,7 +211,7 @@ export default function Home() {
           ) : (
             <ResultTabs result={result} activeTab={activeTab} onTabChange={setActiveTab} />
           )}
-<<<<<<< HEAD
+
           <ResultTabs result={result} activeTab={activeTab} onTabChange={setActiveTab} />
 
           
@@ -222,14 +222,14 @@ export default function Home() {
           <DownloadReport result={result} />
         </div>
 
-=======
+
 
           <div style={{ display: "flex", gap: 12, marginTop: 32 }}>
             <button style={s.backBtn} onClick={reset}>← New Analysis</button>
             <CopyButton result={result} />
             <DownloadReport result={result} />
           </div>
->>>>>>> 1994384d9fedfbe400d6911da1b972e6c5caff88
+
 
         </main>
       )}
