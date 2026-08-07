@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { extractTextFromPDF } from "@/lib/parsePDF";
 import { generateResume } from "@/lib/generateResume";
 import { ResumeBuilderMode } from "@/types";
-
+export const runtime = "nodejs";
+export const maxDuration = 60;
 export async function POST(req: NextRequest) {
   try {
     if (!process.env.GROQ_API_KEY) {
