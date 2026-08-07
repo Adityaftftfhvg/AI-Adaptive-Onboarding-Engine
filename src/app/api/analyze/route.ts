@@ -3,7 +3,8 @@ import { extractTextFromPDF } from "@/lib/parsePDF";
 import { extractSkills } from "@/lib/extractSkills";
 import { recommendCourses } from "@/lib/recommendCourses";
 import { calculateImpact } from "@/lib/calculateImpact";
-
+export const runtime = "nodejs";
+export const maxDuration = 60;
 export async function POST(req: NextRequest) {
   try {
     if (!process.env.GROQ_API_KEY) {
