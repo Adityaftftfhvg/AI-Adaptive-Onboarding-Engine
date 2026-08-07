@@ -1,6 +1,7 @@
 import type { NextAuthConfig } from "next-auth";
 
 export const authConfig = {
+  trustHost: true,
   pages: {
     signIn: "/login",
   },
@@ -12,5 +13,5 @@ export const authConfig = {
       return true;
     },
   },
-  providers: [], 
+  providers: [],
 } satisfies NextAuthConfig;
