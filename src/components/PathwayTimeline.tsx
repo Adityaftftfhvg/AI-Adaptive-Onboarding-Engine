@@ -50,6 +50,7 @@ function CourseCard({ course, index, total }: { course: Course; index: number; t
 
       {/* Card */}
       <div
+        className="px-4 sm:px-6 py-4 sm:py-6"
         style={{
           ...s.card,
           borderColor: hovered ? "rgba(0,212,170,0.3)" : "rgba(0,212,170,0.08)",
@@ -158,14 +159,16 @@ const s: Record<string, React.CSSProperties> = {
     background: "rgba(13,27,42,0.8)",
     backdropFilter: "blur(10px)",
     border: "1px solid",
-    borderRadius: radius.xl, padding: spacing.xl,
+    borderRadius: radius.xl,
     marginBottom: spacing.md,
     position: "relative", overflow: "hidden",
     cursor: "default",
+    minWidth: 0,
   },
   cardHeader: {
     display: "flex", justifyContent: "space-between",
     alignItems: "flex-start", marginBottom: 10, gap: spacing.sm,
+    flexWrap: "wrap",
   },
   name: {
     fontFamily: fonts.display, fontWeight: 700,

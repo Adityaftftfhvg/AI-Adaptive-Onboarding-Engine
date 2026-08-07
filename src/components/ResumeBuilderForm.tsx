@@ -106,13 +106,13 @@ export default function ResumeBuilderForm({ onGenerate, loading, error }: Props)
   }
 
   return (
-    <main style={s.main}>
+    <main style={s.main} className="px-4 sm:px-6">
       <div style={s.badge} className="animate-fadeIn">
         <span style={s.badgeDot} />
         <span style={s.badgeText}>AI Resume Builder · Powered by LLaMA 3.3</span>
       </div>
 
-      <h1 style={s.headline} className="animate-fadeInUp delay-100">
+      <h1 style={s.headline} className="animate-fadeInUp delay-100 text-[32px] sm:text-[44px]">
         Build a Resume That{" "}
         <span style={s.accentText}>Gets You Interviews</span>
       </h1>
@@ -121,7 +121,7 @@ export default function ResumeBuilderForm({ onGenerate, loading, error }: Props)
         Start from scratch or improve what you already have — ATS-optimized, every time.
       </p>
 
-      <div style={s.modeRow} className="animate-fadeIn delay-300">
+      <div style={s.modeRow} className="animate-fadeIn delay-300 flex-wrap justify-center">
         <button
           className="btn-lift"
           style={{ ...s.modeBtn, ...(mode === "create" ? s.modeBtnActive : {}) }}
@@ -150,7 +150,7 @@ export default function ResumeBuilderForm({ onGenerate, loading, error }: Props)
         {mode === "create" ? (
           <>
             <SectionLabel step={1}>Contact</SectionLabel>
-            <div style={s.grid2}>
+            <div style={s.grid2} className="grid-cols-1 sm:grid-cols-2">
               <Field label="Full Name" value={fullName} onChange={setFullName} />
               <Field label="Email" value={email} onChange={setEmail} />
               <Field label="Phone" value={phone} onChange={setPhone} />
@@ -162,7 +162,7 @@ export default function ResumeBuilderForm({ onGenerate, loading, error }: Props)
             <SectionLabel step={2}>Education</SectionLabel>
             {education.map((e, i) => (
               <div key={i} style={s.itemBlock}>
-                <div style={s.grid3}>
+                <div style={s.grid3} className="grid-cols-1 sm:grid-cols-3">
                   <Field label="Degree" value={e.degree} onChange={(v) => updateRow(education, i, { degree: v }, setEducation)} />
                   <Field label="Institution" value={e.institution} onChange={(v) => updateRow(education, i, { institution: v }, setEducation)} />
                   <Field label="Year" value={e.year} onChange={(v) => updateRow(education, i, { year: v }, setEducation)} />
@@ -174,7 +174,7 @@ export default function ResumeBuilderForm({ onGenerate, loading, error }: Props)
             <SectionLabel step={3}>Experience (optional)</SectionLabel>
             {experience.map((e, i) => (
               <div key={i} style={s.itemBlock}>
-                <div style={s.grid2}>
+                <div style={s.grid2} className="grid-cols-1 sm:grid-cols-2">
                   <Field label="Role" value={e.role} onChange={(v) => updateRow(experience, i, { role: v }, setExperience)} />
                   <Field label="Company" value={e.company} onChange={(v) => updateRow(experience, i, { company: v }, setExperience)} />
                 </div>
@@ -193,7 +193,7 @@ export default function ResumeBuilderForm({ onGenerate, loading, error }: Props)
             <SectionLabel step={4}>Projects (optional)</SectionLabel>
             {projects.map((p, i) => (
               <div key={i} style={s.itemBlock}>
-                <div style={s.grid2}>
+                <div style={s.grid2} className="grid-cols-1 sm:grid-cols-2">
                   <Field label="Project name" value={p.name} onChange={(v) => updateRow(projects, i, { name: v }, setProjects)} />
                   <Field label="Tech used (comma-separated)" value={p.tech} onChange={(v) => updateRow(projects, i, { tech: v }, setProjects)} />
                 </div>
@@ -257,7 +257,7 @@ export default function ResumeBuilderForm({ onGenerate, loading, error }: Props)
         )}
 
         <SectionLabel step={6}>Choose a template</SectionLabel>
-        <div style={s.templateRow}>
+        <div style={s.templateRow} className="grid-cols-1 sm:grid-cols-3">
           {TEMPLATES.map((t) => (
             <button
               key={t.id}
@@ -360,7 +360,7 @@ const s: Record<string, React.CSSProperties> = {
   badge: { display: "inline-flex", alignItems: "center", gap: spacing.sm, padding: "6px 14px", borderRadius: radius.xl, border: `1px solid ${colors.border}`, background: colors.accentBg, marginBottom: spacing.xl },
   badgeDot: { width: 6, height: 6, borderRadius: "50%", background: colors.accent },
   badgeText: { fontFamily: fonts.body, fontSize: 12, color: colors.textAccent, letterSpacing: 0.05 },
-  headline: { fontFamily: fonts.display, fontSize: 44, fontWeight: 800, color: colors.textPrimary, margin: `0 0 ${spacing.md}px 0`, maxWidth: 700 },
+  headline: { fontFamily: fonts.display, fontWeight: 800, color: colors.textPrimary, margin: `0 0 ${spacing.md}px 0`, maxWidth: 700 },
   accentText: { background: gradients.accent, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" },
   subheadline: { fontFamily: fonts.body, fontSize: 16, color: colors.textSub, marginBottom: spacing.xl, maxWidth: 560 },
   modeRow: { display: "flex", gap: spacing.md, marginBottom: spacing.xl },
@@ -379,11 +379,11 @@ const s: Record<string, React.CSSProperties> = {
   submitBtn: { width: "100%", padding: "14px", borderRadius: radius.lg, border: "none", background: gradients.accent, color: colors.textDark, fontFamily: fonts.body, fontWeight: 700, fontSize: 15, cursor: "pointer" },
   sectionLabel: { display: "flex", alignItems: "center", gap: 8, fontFamily: fonts.display, fontSize: 13, color: colors.textAccent, textTransform: "uppercase", letterSpacing: 0.08, marginTop: spacing.lg, marginBottom: spacing.md, fontWeight: 700 },
   stepTag: { fontFamily: fonts.mono, fontSize: 11, color: colors.textMuted, background: colors.bgDeep, border: `1px solid ${colors.borderSubtle}`, borderRadius: 4, padding: "2px 6px" },
-  grid2: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: spacing.md },
-  grid3: { display: "grid", gridTemplateColumns: "1fr 1fr 0.6fr", gap: spacing.md },
+  grid2: { display: "grid", gap: spacing.md },
+  grid3: { display: "grid", gap: spacing.md },
   itemBlock: { marginBottom: spacing.md, paddingBottom: spacing.md, borderBottom: `1px solid ${colors.borderSubtle}` },
   addRowBtn: { background: "transparent", border: "none", color: colors.textAccent, fontFamily: fonts.body, fontSize: 13, cursor: "pointer", padding: "4px 0", marginBottom: spacing.lg, textAlign: "left" },
-  templateRow: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: spacing.md, marginBottom: spacing.lg },
+  templateRow: { display: "grid", gap: spacing.md, marginBottom: spacing.lg },
   templateCard: { display: "flex", flexDirection: "column", alignItems: "stretch", gap: 4, padding: "12px 14px", borderRadius: radius.md, borderWidth: 1, borderStyle: "solid", borderColor: colors.border, background: "transparent", cursor: "pointer", textAlign: "left" },
   templateCardActive: { background: colors.accentBgStrong, borderColor: colors.accent },
   previewBox: { background: colors.bgDeep, border: `1px solid ${colors.borderSubtle}`, borderRadius: 4, padding: "10px 12px", marginBottom: 8, minHeight: 46, display: "flex", flexDirection: "column", justifyContent: "center" },

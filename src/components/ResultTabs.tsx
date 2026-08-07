@@ -29,10 +29,11 @@ export default function ResultTabs({ result, activeTab, onTabChange }: Props) {
        {/* Impact Metrics */}
       <ImpactMetricsPanel impact={result.impact} />
       {/* Tab Bar */}
-      <div style={s.tabBar}>
+      <div style={s.tabBar} className="flex-wrap sm:flex-nowrap">
         {TABS.map((tab) => (
           <button
             key={tab.id}
+            className="text-xs sm:text-[15px] px-2 sm:px-4"
             style={{ ...s.tabBtn, ...(activeTab === tab.id ? s.tabActive : {}) }}
             onClick={() => onTabChange(tab.id)}
           >
@@ -124,10 +125,10 @@ const s: Record<string, React.CSSProperties> = {
     borderRadius: radius.lg, padding: 6, marginBottom: spacing.xxl,
   },
   tabBtn: {
-    flex: 1, padding: "10px 16px",
+    flex: 1, paddingTop: 10, paddingBottom: 10,
     background: "transparent", border: "none",
     borderRadius: radius.md, color: colors.textMuted,
-    fontFamily: fonts.body, fontSize: 15,
+    fontFamily: fonts.body,
     cursor: "pointer", transition: "all 0.2s",
   },
   tabActive: { background: colors.accentBgStrong, color: colors.accent, fontWeight: 500 },

@@ -56,7 +56,7 @@ export default function ImpactMetricsPanel({ impact }: { impact: ImpactMetrics }
         </div>
       </div>
 
-      <div style={s.grid}>
+      <div style={s.grid} className="grid-cols-2 lg:grid-cols-4">
         <MetricCard
           icon="⏱"
           value={visible ? <AnimatedNumber target={impact.hours_saved} suffix="h" /> : "0h"}
@@ -222,7 +222,7 @@ const s: Record<string, React.CSSProperties> = {
     fontSize: 13, color: colors.accent, fontWeight: 600,
   },
   grid: {
-    display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
+    display: "grid",
     gap: spacing.md, marginBottom: spacing.xl,
   },
   card: {
@@ -253,7 +253,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   progressTitle: { fontSize: 15, color: colors.textPrimary, fontWeight: 600, marginBottom: 4 },
   progressSub: { fontSize: 13, color: colors.textMuted },
-  progressLegend: { display: "flex", gap: spacing.xl },
+  progressLegend: { display: "flex", gap: spacing.xl, flexWrap: "wrap" },
   legendItem: {
     display: "flex", alignItems: "center", gap: 6,
     fontSize: 12, color: colors.textMuted,

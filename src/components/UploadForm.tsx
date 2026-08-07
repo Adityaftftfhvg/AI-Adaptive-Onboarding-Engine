@@ -52,7 +52,7 @@ export default function UploadForm({ onAnalyze, loading, loadingStep, error }: P
 
   return (
     <main style={s.wrap}>
-      <section style={s.hero}>
+      <section style={s.hero} className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 px-4 sm:px-6 py-14 sm:py-20 lg:py-24">
         <div style={s.heroLeft} className="animate-fadeInUp">
           <div style={s.badge} className="animate-fadeInUp delay-100">
             <span style={s.badgeDot} />
@@ -71,10 +71,10 @@ export default function UploadForm({ onAnalyze, loading, loadingStep, error }: P
           </p>
 
           <div style={s.ctaRow} className="animate-fadeInUp delay-400">
-            <button style={s.ctaPrimary} onClick={scrollToStart} className="btn-ripple">
+            <button style={s.ctaPrimary} onClick={scrollToStart} className="btn-ripple w-full sm:w-auto text-center justify-center">
               Build My Pathway Now
             </button>
-            <a href="#start" style={s.ctaSecondary}>
+            <a href="#start" style={s.ctaSecondary} className="w-full sm:w-auto justify-center">
               See How It Works
             </a>
           </div>
@@ -100,19 +100,19 @@ export default function UploadForm({ onAnalyze, loading, loadingStep, error }: P
           </div>
         </div>
 
-        <div style={s.heroRight} className="animate-fadeInUp delay-200">
+        <div style={s.heroRight} className="animate-fadeInUp delay-200 max-w-md mx-auto lg:max-w-none w-full">
           <div style={s.browserMock} className="animate-floatSlow">
             <div style={s.browserBar}>
               <span style={{ ...s.browserDot, background: "#FF5F57" }} />
               <span style={{ ...s.browserDot, background: "#FEBC2E" }} />
               <span style={{ ...s.browserDot, background: "#28C840" }} />
             </div>
-            <div style={s.browserBody}>
+            <div style={s.browserBody} className="p-4 sm:p-6">
               <div style={s.mockRow}>
                 <MockBar w="55%" h={14} accent />
                 <MockBar w="30%" h={10} />
               </div>
-              <div style={s.mockStatRow}>
+              <div style={s.mockStatRow} className="flex-wrap sm:flex-nowrap">
                 <MockStat value="12" label="Skills Matched" />
                 <MockStat value="4" label="Gaps Found" accent />
               </div>
@@ -129,7 +129,7 @@ export default function UploadForm({ onAnalyze, loading, loadingStep, error }: P
             </div>
           </div>
 
-          <div style={s.floatCard1} className="animate-floatSlow">
+          <div style={s.floatCard1} className="animate-floatSlow hidden sm:flex">
             <span style={{ fontSize: 20 }}>🎯</span>
             <div>
               <div style={s.floatCardTitle}>Grounded</div>
@@ -137,7 +137,7 @@ export default function UploadForm({ onAnalyze, loading, loadingStep, error }: P
             </div>
           </div>
 
-          <div style={s.floatCard2} className="animate-floatSlow delay-300">
+          <div style={s.floatCard2} className="animate-floatSlow delay-300 hidden sm:flex">
             <span style={{ fontSize: 20 }}>⚡</span>
             <div>
               <div style={s.floatCardTitle}>3x Faster</div>
@@ -147,8 +147,8 @@ export default function UploadForm({ onAnalyze, loading, loadingStep, error }: P
         </div>
       </section>
 
-      <section id="start" style={s.startSection}>
-        <div style={s.statsRow} className="animate-fadeIn">
+      <section id="start" style={s.startSection} className="px-4 sm:px-6 py-10 sm:py-16">
+        <div style={s.statsRow} className="animate-fadeIn flex-wrap gap-8 sm:gap-12">
           {[
             { val: "0", label: "Hallucinations" },
             { val: "100%", label: "Grounded Courses" },
@@ -161,7 +161,7 @@ export default function UploadForm({ onAnalyze, loading, loadingStep, error }: P
           ))}
         </div>
 
-        <div style={s.grid} className="animate-fadeIn delay-200">
+        <div style={s.grid} className="animate-fadeIn delay-200 grid-cols-1 md:grid-cols-2">
           <InputCard
             title="Resume"
             mode={resumeMode}
@@ -212,7 +212,7 @@ export default function UploadForm({ onAnalyze, loading, loadingStep, error }: P
             disabled={loading}
             onMouseEnter={() => setBtnHover(true)}
             onMouseLeave={() => setBtnHover(false)}
-            className="btn-ripple"
+            className="btn-ripple w-full sm:w-auto px-6 sm:px-[52px]"
           >
             {loading ? (
               <span style={s.loadingRow}>
@@ -431,10 +431,6 @@ const s: Record<string, React.CSSProperties> = {
   hero: {
     maxWidth: 1200,
     margin: "0 auto",
-    padding: "72px 24px 96px",
-    display: "grid",
-    gridTemplateColumns: "1.05fr 0.95fr",
-    gap: 56,
     alignItems: "center",
   },
   heroLeft: {},
@@ -571,7 +567,6 @@ const s: Record<string, React.CSSProperties> = {
     position: "absolute",
     top: -20,
     right: -20,
-    display: "flex",
     alignItems: "center",
     gap: 10,
     background: colors.surface,
@@ -584,7 +579,6 @@ const s: Record<string, React.CSSProperties> = {
     position: "absolute",
     bottom: -16,
     left: -24,
-    display: "flex",
     alignItems: "center",
     gap: 10,
     background: colors.surface,
@@ -599,14 +593,12 @@ const s: Record<string, React.CSSProperties> = {
   startSection: {
     maxWidth: 920,
     margin: "0 auto",
-    padding: "40px 24px 80px",
     textAlign: "center",
     borderTop: `1px solid ${colors.border}`,
   },
   statsRow: {
     display: "flex",
     justifyContent: "center",
-    gap: 48,
     marginTop: 48,
     marginBottom: 48,
   },
@@ -630,7 +622,6 @@ const s: Record<string, React.CSSProperties> = {
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
     gap: spacing.xl,
     marginBottom: spacing.xxxl,
     textAlign: "left",
@@ -735,7 +726,8 @@ const s: Record<string, React.CSSProperties> = {
   },
   btn: {
     position: "relative",
-    padding: "18px 52px",
+    paddingTop: 18,
+    paddingBottom: 18,
     background: gradients.accent,
     border: "none",
     borderRadius: radius.lg,

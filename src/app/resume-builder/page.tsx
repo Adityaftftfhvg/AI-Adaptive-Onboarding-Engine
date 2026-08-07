@@ -24,12 +24,15 @@ export default function ResumeBuilderPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: colors.bg, fontFamily: fonts.body, color: colors.textPrimary }}>
-      <header style={{
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "16px 48px", borderBottom: `1px solid ${colors.borderSubtle}`,
-      background: "rgba(255,255,255,0.85)", backdropFilter: "blur(20px)",
-      }}>
-      <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, color: colors.textPrimary, textDecoration: "none", fontFamily: fonts.display, fontWeight: 800, fontSize: 20 }}>
+      <header
+        className="flex-wrap gap-3 px-4 sm:px-8 md:px-12 py-3 sm:py-4"
+        style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          borderBottom: `1px solid ${colors.borderSubtle}`,
+          background: "rgba(255,255,255,0.85)", backdropFilter: "blur(20px)",
+        }}
+      >
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, color: colors.textPrimary, textDecoration: "none", fontFamily: fonts.display, fontWeight: 800, fontSize: 20 }}>
           <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 30, height: 30, borderRadius: 8, background: "linear-gradient(135deg, #FF7A50, #FF5A36)", color: "#fff", fontSize: 15 }}>⬡</span>
           PathForge
         </Link>

@@ -57,13 +57,13 @@ export default function TraceAccordion({ trace }: { trace: TraceStep[] }) {
                 <div style={{ ...s.iconWrap, background: config.bg, border: `1px solid ${config.border}` }}>
                   <span style={s.icon}>{config.icon}</span>
                 </div>
-                <div style={s.headerText}>
+                <div style={s.headerText} className="min-w-0">
                   <span style={{ ...s.stepNum, color: config.color }}>Step {i + 1}</span>
-                  <span style={s.stepTitle}>{step.step}</span>
+                  <span style={s.stepTitle} className="truncate">{step.step}</span>
                 </div>
                 <div style={s.headerRight}>
                   {!isOpen && (
-                    <div style={s.previewPills}>
+                    <div style={s.previewPills} className="hidden sm:flex">
                       {(Array.isArray(step.output) ? step.output : [step.output])
                         .slice(0, 3)
                         .map((item, j) => (

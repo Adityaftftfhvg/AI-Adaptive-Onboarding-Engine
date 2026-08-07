@@ -25,6 +25,7 @@ export default function SkillGapChart({ skillGap }: { skillGap: SkillGap }) {
 
       {/* ── Dropdown Toggle Button ─────────────────────── */}
       <button
+        className="px-4 sm:px-6 py-3 sm:py-4 flex-wrap sm:flex-nowrap"
         style={{
           ...s.toggleBtn,
           borderBottomLeftRadius:  open ? 0 : 20,
@@ -52,7 +53,7 @@ export default function SkillGapChart({ skillGap }: { skillGap: SkillGap }) {
         {/* Right: mini bar + percent + chevron */}
         <div style={s.toggleRight}>
           {/* Mini progress track */}
-          <div style={s.miniTrack}>
+          <div style={s.miniTrack} className="hidden sm:block">
             <div style={{
               ...s.miniFill,
               width: `${havePercent}%`,
@@ -78,7 +79,7 @@ export default function SkillGapChart({ skillGap }: { skillGap: SkillGap }) {
         overflow: "hidden",
         transition: "max-height 0.45s cubic-bezier(0.4,0,0.2,1)",
       }}>
-        <div style={s.panel}>
+        <div style={s.panel} className="px-4 sm:px-6">
 
           {/* Header row: summary + filter pills */}
           <div style={s.header}>
@@ -151,6 +152,7 @@ export default function SkillGapChart({ skillGap }: { skillGap: SkillGap }) {
               return (
                 <div
                   key={i}
+                  className="flex-wrap sm:flex-nowrap"
                   style={{
                     ...s.row,
                     background: isHovered ? `${barColor}08` : "transparent",
@@ -174,22 +176,25 @@ export default function SkillGapChart({ skillGap }: { skillGap: SkillGap }) {
                   </div>
 
                   {/* Skill label */}
-                  <div style={{
-                    width: 180, flexShrink: 0,
-                    fontSize: 13,
-                    color: isHovered ? colors.textPrimary : colors.textSub,
-                    fontFamily: fonts.body,
-                    fontWeight: isHovered ? 500 : 400,
-                    transition: "all 0.2s ease",
-                    wordBreak: "break-word" as const,
-                    lineHeight: 1.3,
-                    paddingRight: 8,
-                  }}>
+                  <div
+                    className="w-[calc(100%-40px)] sm:w-[180px]"
+                    style={{
+                      flexShrink: 0,
+                      fontSize: 13,
+                      color: isHovered ? colors.textPrimary : colors.textSub,
+                      fontFamily: fonts.body,
+                      fontWeight: isHovered ? 500 : 400,
+                      transition: "all 0.2s ease",
+                      wordBreak: "break-word" as const,
+                      lineHeight: 1.3,
+                      paddingRight: 8,
+                    }}
+                  >
                     {entry.skill}
                   </div>
 
                   {/* Bar */}
-                  <div style={{ flex: 1, display: "flex", alignItems: "center", gap: 10 }}>
+                  <div className="w-full sm:w-auto pl-10 sm:pl-0" style={{ flex: 1, display: "flex", alignItems: "center", gap: 10 }}>
                     <div style={{
                       flex: 1, height: 10, borderRadius: 5,
                       background: "rgba(255,255,255,0.04)",
@@ -262,7 +267,7 @@ const s: Record<string, React.CSSProperties> = {
   toggleBtn: {
     display: "flex", justifyContent: "space-between",
     alignItems: "center", gap: 16,
-    width: "100%", padding: "16px 24px",
+    width: "100%",
     border: "1px solid rgba(0,212,170,0.1)",
     borderRadius: 20,
     cursor: "pointer",
@@ -303,7 +308,7 @@ const s: Record<string, React.CSSProperties> = {
     borderTop: "none",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    padding: "24px 24px 20px",
+    paddingTop: 24, paddingBottom: 20,
     overflow: "hidden",
   },
   header: {

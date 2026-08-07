@@ -7,10 +7,7 @@ const nextConfig: NextConfig = {
   },
 
   turbopack: {},
-  serverExternalPackages: ["unpdf"],
-};
-
-  serverExternalPackages: ["pdf2json"],
+  serverExternalPackages: ["unpdf", "pdf2json"],
 };
 
 export default nextConfig;

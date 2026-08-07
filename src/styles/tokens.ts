@@ -23,14 +23,9 @@ export const colors = {
 };
 
 export const fonts = {
-
-  display: "'Syne', sans-serif",
-  body: "'DM Sans', sans-serif",
-   mono: "'JetBrains Mono', 'Courier New', monospace",
-
   display: "'Inter', sans-serif",
   body: "'Inter', sans-serif",
-
+  mono: "'JetBrains Mono', 'Courier New', monospace",
 };
 export const radius = {
   xs: 4,

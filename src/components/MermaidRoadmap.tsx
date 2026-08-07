@@ -443,16 +443,18 @@ export default function MermaidRoadmap({ result }: { result: AnalysisResult }) {
   const { stages, missingSkills } = buildRoadmapData(result);
 
   return (
-    <div style={{
-      background: "rgba(10,15,30,0.92)",
-      backdropFilter: "blur(20px)",
-      border: "1px solid rgba(0,212,170,0.12)",
-      borderRadius: 20,
-      padding: 32,
-      minHeight: 400,
-      position: "relative",
-      overflow: "hidden",
-    }}>
+    <div
+      className="p-4 sm:p-6 lg:p-8"
+      style={{
+        background: "rgba(10,15,30,0.92)",
+        backdropFilter: "blur(20px)",
+        border: "1px solid rgba(0,212,170,0.12)",
+        borderRadius: 20,
+        minHeight: 400,
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       {/* Subtle background grid */}
       <div style={{
         position: "absolute", inset: 0, pointerEvents: "none",
@@ -473,6 +475,7 @@ export default function MermaidRoadmap({ result }: { result: AnalysisResult }) {
           alignItems: "center", marginBottom: 28,
           paddingBottom: 18,
           borderBottom: "1px solid rgba(0,212,170,0.1)",
+          flexWrap: "wrap", gap: 12,
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <span style={{ fontSize: 26 }}>🗺️</span>
@@ -512,9 +515,13 @@ export default function MermaidRoadmap({ result }: { result: AnalysisResult }) {
         <SkillsHeader skills={missingSkills} />
 
         {/* Stages */}
-        {stages.map((stage, i) => (
-          <StageRow key={i} stage={stage} index={i} isLast={i === stages.length - 1} />
-        ))}
+        <div style={{ overflowX: "auto" }}>
+          <div style={{ minWidth: 560 }}>
+            {stages.map((stage, i) => (
+              <StageRow key={i} stage={stage} index={i} isLast={i === stages.length - 1} />
+            ))}
+          </div>
+        </div>
 
         {/* End marker */}
         <div style={{

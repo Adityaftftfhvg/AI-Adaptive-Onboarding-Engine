@@ -89,7 +89,7 @@ export default function ResumeEditor({ resume, onReset, initialTemplate }: Props
   }
 
   return (
-    <div style={s.wrap} className="animate-fadeIn">
+    <div style={s.wrap} className="animate-fadeIn px-4 sm:px-6">
       
       <div style={s.atsCard}>
         <div>
@@ -107,7 +107,7 @@ export default function ResumeEditor({ resume, onReset, initialTemplate }: Props
       {/* Editable form */}
       <div style={s.card}>
         <SectionLabel>Contact</SectionLabel>
-        <div style={s.grid2}>
+        <div style={s.grid2} className="grid-cols-1 sm:grid-cols-2">
           <Field label="Full Name" value={data.fullName} onChange={(v) => update("fullName", v)} />
           <Field label="Email" value={data.email} onChange={(v) => update("email", v)} />
           <Field label="Phone" value={data.phone} onChange={(v) => update("phone", v)} />
@@ -126,7 +126,7 @@ export default function ResumeEditor({ resume, onReset, initialTemplate }: Props
         <SectionLabel>Experience</SectionLabel>
         {data.experience.map((exp, i) => (
           <div key={i} style={s.itemBlock}>
-            <div style={s.grid2}>
+            <div style={s.grid2} className="grid-cols-1 sm:grid-cols-2">
               <Field label="Role" value={exp.role} onChange={(v) => updateExperience(i, { role: v })} />
               <Field label="Company" value={exp.company} onChange={(v) => updateExperience(i, { company: v })} />
             </div>
@@ -163,7 +163,7 @@ export default function ResumeEditor({ resume, onReset, initialTemplate }: Props
         <SectionLabel>Education</SectionLabel>
         {data.education.map((edu, i) => (
           <div key={i} style={s.itemBlock}>
-            <div style={s.grid2}>
+            <div style={s.grid2} className="grid-cols-1 sm:grid-cols-2">
               <Field label="Degree" value={edu.degree} onChange={(v) => updateEducation(i, { degree: v })} />
               <Field label="Institution" value={edu.institution} onChange={(v) => updateEducation(i, { institution: v })} />
               <Field label="Year" value={edu.year} onChange={(v) => updateEducation(i, { year: v })} />
@@ -184,7 +184,7 @@ export default function ResumeEditor({ resume, onReset, initialTemplate }: Props
 
       <div style={s.card}>
         <SectionLabel>Template</SectionLabel>
-        <div style={s.templateRow}>
+        <div style={s.templateRow} className="grid-cols-1 sm:grid-cols-3">
           {TEMPLATES.map((t) => (
             <button
               key={t.id}
@@ -200,9 +200,9 @@ export default function ResumeEditor({ resume, onReset, initialTemplate }: Props
         </div>
       </div>
 
-      <div style={{ display: "flex", gap: spacing.md, marginTop: spacing.xl }}>
-        <button className="btn-lift" style={s.backBtn} onClick={onReset}>← Start Over</button>
-        <button className="btn-lift" style={{ ...s.downloadBtn, opacity: downloading ? 0.6 : 1 }} onClick={handleDownload} disabled={downloading}>
+      <div className="flex flex-col sm:flex-row" style={{ gap: spacing.md, marginTop: spacing.xl }}>
+        <button className="btn-lift w-full sm:w-auto" style={s.backBtn} onClick={onReset}>← Start Over</button>
+        <button className="btn-lift w-full sm:w-auto" style={{ ...s.downloadBtn, opacity: downloading ? 0.6 : 1 }} onClick={handleDownload} disabled={downloading}>
           {downloading ? "Preparing PDF..." : "↓ Download PDF"}
         </button>
       </div>
@@ -401,7 +401,7 @@ function buildMinimalHTML(data: ResumeData): string {
 }
 
 const s: Record<string, React.CSSProperties> = {
-  wrap: { maxWidth: 720, margin: "0 auto", padding: "40px 24px 80px" },
+  wrap: { maxWidth: 720, margin: "0 auto", paddingTop: 40, paddingBottom: 80 },
   atsCard: { background: colors.surface, border: `1px solid ${colors.border}`, borderRadius: radius.xl, padding: spacing.xl, marginBottom: spacing.xl },
   atsLabel: { fontFamily: fonts.body, fontSize: 12, color: colors.textMuted, textTransform: "uppercase", letterSpacing: 0.05 },
   atsScoreRow: { display: "flex", alignItems: "baseline", gap: 6, marginBottom: spacing.md },
@@ -412,11 +412,11 @@ const s: Record<string, React.CSSProperties> = {
   card: { background: colors.surface, border: `1px solid ${colors.border}`, borderRadius: radius.xl, padding: spacing.xl, marginBottom: spacing.lg },
   sectionLabel: { fontFamily: fonts.display, fontSize: 13, color: colors.textAccent, textTransform: "uppercase", letterSpacing: 0.08, marginTop: 0, marginBottom: spacing.md, fontWeight: 700 },
   itemBlock: { marginBottom: spacing.lg, paddingBottom: spacing.lg, borderBottom: `1px solid ${colors.borderSubtle}` },
-  grid2: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: spacing.md },
+  grid2: { display: "grid", gap: spacing.md },
   label: { display: "block", fontFamily: fonts.body, fontSize: 11, color: colors.textMuted, textTransform: "uppercase", letterSpacing: 0.05, marginBottom: 4 },
   input: { width: "100%", padding: "8px 12px", borderRadius: radius.sm, border: `1px solid ${colors.border}`, background: colors.bgDeep, color: colors.textPrimary, fontFamily: fonts.body, fontSize: 13, boxSizing: "border-box" },
   textarea: { width: "100%", padding: "10px 12px", borderRadius: radius.sm, border: `1px solid ${colors.border}`, background: colors.bgDeep, color: colors.textPrimary, fontFamily: fonts.body, fontSize: 13, boxSizing: "border-box", resize: "vertical" },
-  templateRow: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: spacing.md },
+  templateRow: { display: "grid", gap: spacing.md },
   templateBtn: { display: "flex", flexDirection: "column", alignItems: "stretch", gap: 6, padding: "10px 12px", borderRadius: radius.md, borderWidth: 1, borderStyle: "solid", borderColor: colors.border, background: "transparent", color: colors.textSub, fontFamily: fonts.body, fontSize: 13, fontWeight: 600, cursor: "pointer" },
   templateBtnActive: { background: colors.accentBgStrong, color: colors.textAccent, borderColor: colors.accent },
   backBtn: { padding: "10px 24px", background: "transparent", border: `1px solid ${colors.border}`, borderRadius: radius.md, color: colors.textMuted, fontFamily: fonts.body, fontSize: 14, cursor: "pointer" },
