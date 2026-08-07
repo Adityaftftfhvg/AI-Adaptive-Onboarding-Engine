@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { Tab, AnalysisResult } from "@/types";
 import { useState, useEffect } from "react";
+import { useSession, signOut } from "next-auth/react";
 import { useAnalyze } from "@/hooks/useAnalyze";
 import UploadForm from "@/components/UploadForm";
 import ResultTabs from "@/components/ResultTabs";
@@ -68,12 +69,19 @@ export default function Home() {
   const { loading, loadingStep, error, result, analyze, reset } = useAnalyze();
   const [activeTab, setActiveTab] = useState<Tab>("gap");
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session, status } = useSession();
+  const isAuthed = status === "authenticated";
 
   useEffect(() => {
     const style = document.createElement("style");
     style.innerHTML = `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');`;
     document.head.appendChild(style);
   }, []);
+
+  function handleLogout(closeMenu = false) {
+    if (closeMenu) setMenuOpen(false);
+    signOut({ callbackUrl: "/" });
+  }
 
   return (
     <div style={s.page}>
@@ -100,7 +108,20 @@ export default function Home() {
         </nav>
 
         <div className="hidden sm:flex" style={{ alignItems: "center", gap: 14 }}>
-          <a href="/login" style={s.loginLink}>Login</a>
+          {isAuthed ? (
+            
+              href="#"
+              style={s.loginLink}
+              onClick={(e) => {
+                e.preventDefault();
+                handleLogout();
+              }}
+            >
+              Logout
+            </a>
+          ) : (
+            <a href="/login" style={s.loginLink}>Login</a>
+          )}
           <a href="#start" style={s.headerCta}>Get Started</a>
         </div>
 
@@ -131,7 +152,20 @@ export default function Home() {
         >
           <a href="/resume-builder" style={s.navLink} onClick={() => setMenuOpen(false)}>Resume Builder</a>
           <a href="#start" style={s.navLink} onClick={() => setMenuOpen(false)}>How It Works</a>
-          <a href="/login" style={s.navLink} onClick={() => setMenuOpen(false)}>Login</a>
+          {isAuthed ? (
+            
+              href="#"
+              style={s.navLink}
+              onClick={(e) => {
+                e.preventDefault();
+                handleLogout(true);
+              }}
+            >
+              Logout
+            </a>
+          ) : (
+            <a href="/login" style={s.navLink} onClick={() => setMenuOpen(false)}>Login</a>
+          )}
           <a href="#start" style={{ ...s.headerCta, textAlign: "center", marginTop: 8 }} onClick={() => setMenuOpen(false)}>Get Started</a>
         </div>
       )}
