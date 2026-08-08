@@ -1,5 +1,3 @@
-import { pipeline } from "@xenova/transformers";
-
 interface CourseWithEmbedding {
   course: string;
   skills: string;
@@ -12,8 +10,22 @@ interface CourseWithEmbedding {
   embedding: number[];
 }
 
+export type CatalogCourse = Omit<CourseWithEmbedding, "embedding"> & {
+  skillsList: string[];
+};
+
 let cachedEmbeddings: CourseWithEmbedding[] | null = null;
-let embedder: any = null;
+let cachedCatalog: CatalogCourse[] | null = null;
+
+
+function parseSkillsField(raw: string): string[] {
+  if (!raw) return [];
+  return raw
+    .replace(/^{|}$/g, "")
+    .split(/","|",|,"/)
+    .map((s) => s.replace(/^"|"$/g, "").trim().toLowerCase())
+    .filter(Boolean);
+}
 
 export function loadEmbeddings(): CourseWithEmbedding[] {
   if (cachedEmbeddings) return cachedEmbeddings;
@@ -25,45 +37,78 @@ export function loadEmbeddings(): CourseWithEmbedding[] {
   return cachedEmbeddings!;
 }
 
-async function getEmbedding(text: string): Promise<number[]> {
-  if (!embedder) {
-    embedder = await pipeline("feature-extraction", "Xenova/nomic-embed-text-v1");
-  }
-  const output = await embedder(`search_query: ${text}`, {
-    pooling: "mean",
-    normalize: true,
-  });
-  return Array.from(output.data as Float32Array);
+function loadCatalog(): CatalogCourse[] {
+  if (cachedCatalog) return cachedCatalog;
+  const raw = loadEmbeddings();
+  cachedCatalog = raw.map(({ embedding, ...course }) => ({
+    ...course,
+    skillsList: parseSkillsField(course.skills),
+  }));
+  return cachedCatalog;
 }
 
-function cosineSimilarity(a: number[], b: number[]): number {
-  let dot = 0;
-  let normA = 0;
-  let normB = 0;
-  for (let i = 0; i < a.length; i++) {
-    dot += a[i] * b[i];
-    normA += a[i] * a[i];
-    normB += b[i] * b[i];
-  }
-  if (normA === 0 || normB === 0) return 0;
-  return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+)
+function normalize(skill: string): string {
+  return skill.toLowerCase().trim().replace(/[^a-z0-9\s+#.]/g, "");
 }
+
+
+function scoreCourse(courseSkills: string[], missingSkills: string[]): number {
+  let score = 0;
+  const normCourseSkills = courseSkills.map(normalize);
+
+  for (const missing of missingSkills) {
+    const normMissing = normalize(missing);
+    if (!normMissing) continue;
+
+    let matched = false;
+    for (const cs of normCourseSkills) {
+      if (!cs) continue;
+      if (cs === normMissing) {
+        score += 3; // exact match
+        matched = true;
+        break;
+      }
+      if (cs.includes(normMissing) || normMissing.includes(cs)) {
+        score += 1.5; // partial/substring match
+        matched = true;
+        break;
+      }
+      // token overlap fallback (e.g. "machine learning" vs "ml machine learning basics")
+      const missingTokens = normMissing.split(/\s+/).filter((t) => t.length > 2);
+      const csTokens = new Set(cs.split(/\s+/));
+      const overlap = missingTokens.filter((t) => csTokens.has(t)).length;
+      if (overlap > 0 && overlap === missingTokens.length) {
+        score += 1;
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) continue;
+  }
+
+  return score;
+}
+
 
 export async function searchCatalog(
   missingSkills: string[],
   topN = 15
-): Promise<(Omit<CourseWithEmbedding, "embedding"> & { score: number })[]> {
-  const query = `Skills needed: ${missingSkills.join(", ")}`;
-  const queryEmbedding = await getEmbedding(query);
-  const catalog = loadEmbeddings();
+): Promise<(Omit<CatalogCourse, "skillsList"> & { score: number })[]> {
+  const catalog = loadCatalog();
 
   const scored = catalog.map((course) => ({
     ...course,
-    score: cosineSimilarity(queryEmbedding, course.embedding),
+    score: scoreCourse(course.skillsList, missingSkills),
   }));
 
-  return scored
-    .sort((a, b) => b.score - a.score)
-    .slice(0, topN)
-    .map(({ embedding, ...course }) => course);
+  const ranked = scored
+    .filter((c) => c.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  // If nothing matched directly, fall back to returning the top-rated
+  // courses so the LLM still has candidates to reason over.
+  const pool = ranked.length > 0 ? ranked : scored;
+
+  return pool.slice(0, topN).map(({ skillsList, ...course }) => course);
 }
