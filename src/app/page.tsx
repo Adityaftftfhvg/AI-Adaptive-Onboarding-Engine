@@ -7,6 +7,8 @@ import { useAnalyze } from "@/hooks/useAnalyze";
 import UploadForm from "@/components/UploadForm";
 import ResultTabs from "@/components/ResultTabs";
 import { colors, fonts, radius, spacing, gradients } from "@/styles/tokens";
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const DownloadReport = dynamic(() => import("@/components/DownloadReport"), {
   ssr: false,
@@ -68,12 +70,22 @@ export default function Home() {
   const { loading, loadingStep, error, result, analyze, reset } = useAnalyze();
   const [activeTab, setActiveTab] = useState<Tab>("gap");
   const [menuOpen, setMenuOpen] = useState(false);
+  const { status } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     const style = document.createElement("style");
     style.innerHTML = `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');`;
     document.head.appendChild(style);
   }, []);
+
+  function handleAnalyze(params: Parameters<typeof analyze>[0]) {
+    if (status !== "authenticated") {
+      router.push("/login?callbackUrl=/");
+      return;
+    }
+    analyze(params);
+  }
 
   return (
     <div style={s.page}>
@@ -100,7 +112,16 @@ export default function Home() {
         </nav>
 
         <div className="hidden sm:flex" style={{ alignItems: "center", gap: 14 }}>
-          <a href="/login" style={s.loginLink}>Login</a>
+          {status === "authenticated" ? (
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              style={{ ...s.loginLink, background: "none", border: "none", cursor: "pointer", fontFamily: fonts.body }}
+            >
+              Logout
+            </button>
+          ) : (
+            <a href="/login" style={s.loginLink}>Login</a>
+          )}
           <a href="#start" style={s.headerCta}>Get Started</a>
         </div>
 
@@ -131,14 +152,23 @@ export default function Home() {
         >
           <a href="/resume-builder" style={s.navLink} onClick={() => setMenuOpen(false)}>Resume Builder</a>
           <a href="#start" style={s.navLink} onClick={() => setMenuOpen(false)}>How It Works</a>
-          <a href="/login" style={s.navLink} onClick={() => setMenuOpen(false)}>Login</a>
+          {status === "authenticated" ? (
+            <button
+              onClick={() => { setMenuOpen(false); signOut({ callbackUrl: "/" }); }}
+              style={{ ...s.navLink, background: "none", border: "none", textAlign: "left", cursor: "pointer", padding: 0, fontFamily: fonts.body }}
+            >
+              Logout
+            </button>
+          ) : (
+            <a href="/login" style={s.navLink} onClick={() => setMenuOpen(false)}>Login</a>
+          )}
           <a href="#start" style={{ ...s.headerCta, textAlign: "center", marginTop: 8 }} onClick={() => setMenuOpen(false)}>Get Started</a>
         </div>
       )}
 
       {!result ? (
         <UploadForm
-          onAnalyze={analyze}
+          onAnalyze={handleAnalyze}
           loading={loading}
           loadingStep={loadingStep}
           error={error}
