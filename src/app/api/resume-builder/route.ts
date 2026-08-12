@@ -4,6 +4,13 @@ import { generateResume } from "@/lib/generateResume";
 import { ResumeBuilderMode } from "@/types";
 export const runtime = "nodejs";
 export const maxDuration = 60;
+import { auth } from "@/auth";
+
+const session = await auth();
+if (!session?.user) {
+  return NextResponse.json({ error: "You must be logged in..." }, { status: 401 });
+}
+
 export async function POST(req: NextRequest) {
   try {
     if (!process.env.GROQ_API_KEY) {
