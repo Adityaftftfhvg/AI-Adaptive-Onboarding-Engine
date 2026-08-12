@@ -2,17 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { extractTextFromPDF } from "@/lib/parsePDF";
 import { generateResume } from "@/lib/generateResume";
 import { ResumeBuilderMode } from "@/types";
+import { auth } from "@/auth";
 export const runtime = "nodejs";
 export const maxDuration = 60;
-import { auth } from "@/auth";
-
-const session = await auth();
-if (!session?.user) {
-  return NextResponse.json({ error: "You must be logged in..." }, { status: 401 });
-}
-
 export async function POST(req: NextRequest) {
   try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: "You must be logged in to use the Resume Builder." },
+        { status: 401 }
+      );
+    }
+
     if (!process.env.GROQ_API_KEY) {
       return NextResponse.json(
         { error: "GROQ_API_KEY is not set. Add it to your .env.local file." },
