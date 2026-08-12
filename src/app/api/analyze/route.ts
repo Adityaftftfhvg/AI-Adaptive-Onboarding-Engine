@@ -5,6 +5,13 @@ import { recommendCourses } from "@/lib/recommendCourses";
 import { calculateImpact } from "@/lib/calculateImpact";
 export const runtime = "nodejs";
 export const maxDuration = 60;
+
+import { auth } from "@/auth";
+
+const session = await auth();
+if (!session?.user) {
+  return NextResponse.json({ error: "You must be logged in..." }, { status: 401 });
+}
 export async function POST(req: NextRequest) {
   try {
     if (!process.env.GROQ_API_KEY) {
