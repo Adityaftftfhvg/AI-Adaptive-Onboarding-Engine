@@ -3,7 +3,7 @@ import { getGroq } from "./groq";
 
 export async function extractSkills(resumeText: string, jdText: string) {
   const response = await getGroq().chat.completions.create({
-    model: "llama-3.3-70b-versatile",
+    model: "openai/gpt-oss-120b",
     messages: [
       {
         role: "system",
